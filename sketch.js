@@ -72,7 +72,9 @@ var sketch = new p5(function(p) {
             dotDetection();
             displayArray();
         } else if (mode == 2) {
-
+            if (system) {
+                system.applyBehaviours();
+            }
         }
     };
     p.mousePressed = function() {
@@ -164,9 +166,9 @@ var geo = new p5(function(p) {
         }
     };
     p.draw = function() {
-        p.translate(p.width / 2, p.height / 2);
         if (mode == 2) {
             p.clear();
+            p.translate(p.width / 2, p.height / 2);
             p.noStroke();
             if (system) {
                 for (let i = 0; i < system.flocks.length; i++) {
