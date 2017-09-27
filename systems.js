@@ -1,27 +1,14 @@
-function fetchJSON(name) {
-    for (let i = 0; i < JSONs.length; i++) {
-        if (JSONs[i].name == name) {
-            console.log("Found a matching JSON name for " + name);
-            return JSONs[i].graph;
-        }
-    }
-    console.log("Did not find a matching JSON name for " + name);
-    return null;
-}
-
 function loadSystems() {
-    var System = function() {
-        this.flocks = [];
-        this.applyBehaviours = function() {
-            for (let i = 0; i < this.flocks.length; i++) {
-                this.flocks[i].behaviour(this);
-            }
-        };
-    };
 
     var firstSystem = new System();
 
-    firstSystem.flocks[0] = {
+    firstSystem.addFlock({
+        type: "vehicles",
+        vehicleVariables: {
+            maxSpeed: 10,
+            maxForce: 10,
+            desiredSeparation: 50
+        },
         color: [0, 255, 0],
         behaviour: function(that) {
             for (let i = 0; i < this.graph.length; i++) {
@@ -30,12 +17,12 @@ function loadSystems() {
             }
         },
         graph: fetchJSON("wed-sep-27-2017-014236")
-    };
-    firstSystem.flocks[1] = {
+    });
+    firstSystem.addFlock({
         color: [255, 0, 0],
         behaviour: function() {},
         graph: fetchJSON("wed-sep-27-2017-014506")
-    };
+    });
 
     return firstSystem;
 }

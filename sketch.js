@@ -13,17 +13,6 @@ var system;
 var graphAngles = false;
 var angle = 0;
 
-function fetchJSON(name) {
-    for (let i = 0; i < JSONs.length; i++) {
-        if (JSONs[i].name == name) {
-            console.log("Found a matching JSON name for " + name);
-            return JSONs[i].graph;
-        }
-    }
-    console.log("Did not find a matching JSON name for " + name);
-    return null;
-}
-
 var sketch = new p5(function(p) {
     p.preload = function() {
         img = p.loadImage("./images/polkadot.jpg");
@@ -197,16 +186,7 @@ var geo = new p5(function(p) {
             p.translate(p.width / 2, p.height / 2);
             p.noStroke();
             if (system) {
-                for (let i = 0; i < system.flocks.length; i++) {
-                    var color = system.flocks[i].color;
-                    color = p.color(color[0], color[1], color[2]);
-                    p.fill(color);
-                    for (let g = 0; g < system.flocks[i].graph.length; g++) {
-                        var x = system.flocks[i].graph[g].x;
-                        var y = system.flocks[i].graph[g].y;
-                        p.ellipse(x - p.width / 2, y - p.height / 2, 5);
-                    }
-                }
+                system.displayGeo();
             }
         }
     };

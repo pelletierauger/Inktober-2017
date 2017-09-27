@@ -1,9 +1,9 @@
 var vehicles = [];
 
 var Vehicle = function(x, y, mS, mF) {
-    this.pos = createVector(x, y);
-    this.vel = createVector(0, 0);
-    this.acc = createVector(0, 0);
+    this.pos = new p5.Vector(x, y);
+    this.vel = new p5.Vector(0, 0);
+    this.acc = new p5.Vector(0, 0);
     this.maxSpeed = 150;
     this.maxForce = 10;
     vehicles.push(this);
@@ -25,7 +25,7 @@ Vehicle.prototype.seek = function(target) {
 
 Vehicle.prototype.separate = function(vehicles) {
     var desiredSeparation = 50;
-    var sum = createVector(0, 0);
+    var sum = new p5.Vector(0, 0);
     var count = 0;
     for (var i = 0; i < vehicles.length; i++) {
         var d = p5.Vector.dist(this.pos, vehicles[i].pos);
