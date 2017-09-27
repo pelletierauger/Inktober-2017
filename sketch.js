@@ -4,7 +4,7 @@ var showGeo = true;
 var showPanels = true;
 var showSketch = true;
 var modes = ["drawGraph", "detectGraph", "animate"];
-var mode = 1;
+var mode = 2;
 var points = [];
 var pointsDisplay;
 var img;
