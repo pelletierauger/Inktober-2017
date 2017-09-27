@@ -73,6 +73,17 @@ var sketch = new p5(function(p) {
                         system.displayInkDots();
                     }
                 }
+                if (system.rate == 1) {
+                    if (!system.backgroundDisplayedOnce) {
+                        system.displayBackground();
+                    }
+                    if (system.backgroundDisplayedOnce) {
+                        system.displayBackground();
+                        p.blendMode(p.MULTIPLY);
+                        system.displayInkDots();
+                        p.blendMode(p.NORMAL);
+                    }
+                }
                 if (system.backgroundDisplayedOnce) {
                     system.update();
                 }
