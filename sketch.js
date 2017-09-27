@@ -141,26 +141,37 @@ var sketch = new p5(function(p) {
 
 var geo = new p5(function(p) {
     p.setup = function() {
+        if (mode == 0 || mode == 1) {
+            p.pixelDensity(1);
+        }
         p.canvas = p.createCanvas(p.windowWidth, p.windowWidth * 9 / 16);
         p.canvas.addClass('geo');
         p.frameRate(30);
         if (!looping) {
             p.noLoop();
         }
+        if (mode == 0 || mode == 1) {
+            p.noStroke();
+        }
     };
     p.draw = function() {
-        p.clear();
-        p.fill(0, 255, 0);
-        p.noStroke();
-        p.ellipse(p.width / 2, p.height / 2, 50);
-        for (let i = 0; i < system.flocks.length; i++) {
-            for (let g = 0; g <  system.flocks[i].graph.length; g++) {
-                var color = system.flocks[i].color;
-                color = p.color(color[0], color[1], color[2]);
-                var x = system.flocks[i].graph[g][0];
-                var y = system.flocks[i].graph[g][1];
-                p.fill(color);
-                p.ellipse(x, y, 50);
+        if (mode == 1) {
+            p.translate(p.width / 2, p.height / 2);
+        }
+        if (mode == 2) {
+            p.clear();
+            p.fill(0, 255, 0);
+            p.noStroke();
+            p.ellipse(p.width / 2, p.height / 2, 50);
+            for (let i = 0; i < system.flocks.length; i++) {
+                for (let g = 0; g <  system.flocks[i].graph.length; g++) {
+                    var color = system.flocks[i].color;
+                    color = p.color(color[0], color[1], color[2]);
+                    var x = system.flocks[i].graph[g][0];
+                    var y = system.flocks[i].graph[g][1];
+                    p.fill(color);
+                    p.ellipse(x, y, 50);
+                }
             }
         }
     };
