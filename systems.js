@@ -23,7 +23,8 @@ function loadSystems() {
         behaviour: function() {},
         graph: fetchJSON("wed-sep-27-2017-014506")
     });
-    firstSystem.flocks[0].addRepellers(firstSystem.flocks[1], 0.05);
+    firstSystem.flocks[0].addAttractors(firstSystem.flocks[1], 0.0015);
+    firstSystem.flocks[0].addRepellers(firstSystem.flocks[0], 0.05);
 
     return firstSystem;
 }
