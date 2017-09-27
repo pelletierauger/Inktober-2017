@@ -1,6 +1,7 @@
 var http = require('http');
 var path = require('path');
 var fs = require('fs');
+var filenameFormatter = require('./filename-formatter.js');
 
 function handleRequest(req, res) {
     // What did we request?
@@ -49,5 +50,18 @@ io.sockets.on('connection', function(socket) {
     });
     socket.on('bounce', function(data) {
         console.log(data);
+    });
+    socket.on('savePoints', function(data) {
+        console.log(data);
+        data = JSON.stringify(data);
+        var fileName = filenameFormatter(Date());
+        fileName = fileName.slice(0, fileName.length - 13);
+        fs.writeFile("./JSONs/" + fileName + '.json', data, function(err) {
+            if (err) {
+                return console.error(err);
+            } else {
+                console.log("./JSONs/" + fileName + '.json written successfully.');
+            }
+        });
     });
 });
