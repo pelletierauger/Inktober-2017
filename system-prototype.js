@@ -1,8 +1,9 @@
 var System = function(s) {
     this.rate = s.rate;
     this.name = s.name;
+    this.onlyGeo = s.onlyGeo;
     this.flocks = [];
-    if (s.background) {
+    if (s.background && !this.onlyGeo) {
         this.background = sketch.loadImage("./images/" + this.name + "/background.png");
         this.backgroundDisplayedOnce = false;
     } else {

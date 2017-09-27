@@ -3,7 +3,8 @@ function loadSystems() {
     var firstSystem = new System({
         rate: 0,
         name: "firstSystem",
-        background: true
+        background: true,
+        onlyGeo: false
     });
 
     firstSystem.addFlock({

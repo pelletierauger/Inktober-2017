@@ -64,24 +64,26 @@ var sketch = new p5(function(p) {
             displayArray();
         } else if (mode == 2) {
             if (system) {
-                if (system.rate == 0) {
-                    if (!system.backgroundDisplayedOnce) {
-                        system.displayBackground();
+                if (!system.onlyGeo) {
+                    if (system.rate == 0) {
+                        if (!system.backgroundDisplayedOnce) {
+                            system.displayBackground();
+                        }
+                        if (system.backgroundDisplayedOnce) {
+                            p.blendMode(p.MULTIPLY);
+                            system.displayInkDots();
+                        }
                     }
-                    if (system.backgroundDisplayedOnce) {
-                        p.blendMode(p.MULTIPLY);
-                        system.displayInkDots();
-                    }
-                }
-                if (system.rate == 1) {
-                    if (!system.backgroundDisplayedOnce) {
-                        system.displayBackground();
-                    }
-                    if (system.backgroundDisplayedOnce) {
-                        system.displayBackground();
-                        p.blendMode(p.MULTIPLY);
-                        system.displayInkDots();
-                        p.blendMode(p.NORMAL);
+                    if (system.rate == 1) {
+                        if (!system.backgroundDisplayedOnce) {
+                            system.displayBackground();
+                        }
+                        if (system.backgroundDisplayedOnce) {
+                            system.displayBackground();
+                            p.blendMode(p.MULTIPLY);
+                            system.displayInkDots();
+                            p.blendMode(p.NORMAL);
+                        }
                     }
                 }
                 if (system.backgroundDisplayedOnce) {
