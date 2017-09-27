@@ -14,6 +14,7 @@ var graphJSON = function(path, name) {
 };
 
 loadJSONs();
+// console.log(JSONs);
 
 function handleRequest(req, res) {
     // What did we request?

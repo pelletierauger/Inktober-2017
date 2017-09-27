@@ -8,6 +8,19 @@ var mode = 2;
 var points = [];
 var pointsDisplay;
 var img;
+var JSONs;
+var system;
+
+function fetchJSON(name) {
+    for (let i = 0; i < JSONs.length; i++) {
+        if (JSONs[i].name == name) {
+            console.log("Found a matching JSON name for " + name);
+            return JSONs[i].graph;
+        }
+    }
+    console.log("Did not a matching JSON name for " + name);
+    return null;
+}
 
 var sketch = new p5(function(p) {
     p.preload = function() {
@@ -25,12 +38,11 @@ var sketch = new p5(function(p) {
         p.fill(255, 0, 0);
         p.noStroke();
         p.imageMode(p.CENTER);
-        // p.ellipse(p.width / 2, p.height / 2, 100);
         createInterface();
         if (!looping) {
             p.noLoop();
         }
-        if (mode == 0) {
+        if (mode == 0 || mode == 1) {
             folders.pointsDisplay = new Folder("Amount of points", true);
             pointsDisplay = p.createP(points.length);
             pointsDisplay.parent(folders.pointsDisplay.div);
@@ -39,22 +51,15 @@ var sketch = new p5(function(p) {
                     socket.emit('savePoints', points);
                 }
             });
-        } else if (mode == 1) {
-            folders.pointsDisplay = new Folder("Amount of points", true);
-            pointsDisplay = p.createP(points.length);
-            pointsDisplay.parent(folders.pointsDisplay.div);
-            var saveButton = new Button("Save points to JSON", folders.pointsDisplay.div, function() {
-                if (points.length) {
-                    socket.emit('savePoints', points);
-                }
-            });
-
+        }
+        if (mode == 1) {
             p.image(img, p.width / 2, p.height / 2, p.width, p.height);
             p.loadPixels();
             p.background(0, 150);
         } else if (mode == 2) {
             socket.on('pushJSONs', function(data) {
-                console.log(data);
+                JSONs = data;
+                system = loadSystems();
             });
             socket.emit('pullJSONs', "");
         }
@@ -64,7 +69,6 @@ var sketch = new p5(function(p) {
         if (mode == 0) {
 
         } else if (mode == 1) {
-            // p.background(0);
             dotDetection();
             displayArray();
         } else if (mode == 2) {
@@ -74,8 +78,11 @@ var sketch = new p5(function(p) {
     p.mousePressed = function() {
         if (mode == 0) {
             if (p.mouseX <= p.width && p.mouseY <= p.height) {
-                var newV = [p.mouseX - p.width / 2, p.mouseY - p.height / 2];
-                p.ellipse(newV[0], newV[1], 2);
+                var newV = {
+                    x: p.mouseX,
+                    y: p.mouseY
+                };
+                p.ellipse(newV.x - p.width / 2, newV.y - p.height / 2, 2);
                 points.push(newV);
                 pointsDisplay.html(points.length);
             }
@@ -84,8 +91,11 @@ var sketch = new p5(function(p) {
     p.mouseDragged = function() {
         if (mode == 0) {
             if (p.mouseX <= p.width && p.mouseY <= p.height) {
-                var newV = [p.mouseX - p.width / 2, p.mouseY - p.height / 2];
-                p.ellipse(newV[0], newV[1], 2);
+                var newV = {
+                    x: p.mouseX,
+                    y: p.mouseY
+                };
+                p.ellipse(newV.x - p.width / 2, newV.y - p.height / 2, 2);
                 points.push(newV);
                 pointsDisplay.html(points.length);
             }
@@ -116,11 +126,9 @@ var sketch = new p5(function(p) {
             if (showGeo) {
                 showGeo = false;
                 geo.canvas.style("display", "none");
-                // geo.noLoop();
             } else {
                 showGeo = true;
                 geo.canvas.style("display", "block");
-                // geo.loop();
             }
         }
         if (p.key == 'f' || p.key == 'F') {
@@ -133,8 +141,6 @@ var sketch = new p5(function(p) {
             }
         }
         if (p.key == 'p' || p.key == 'P') {
-
-            // socket.emit('bounce', "Newer test!");
             if (points.length) {
                 socket.emit('savePoints', points);
             }
@@ -158,22 +164,20 @@ var geo = new p5(function(p) {
         }
     };
     p.draw = function() {
-        if (mode == 1) {
-            p.translate(p.width / 2, p.height / 2);
-        }
+        p.translate(p.width / 2, p.height / 2);
         if (mode == 2) {
             p.clear();
-            p.fill(0, 255, 0);
             p.noStroke();
-            p.ellipse(p.width / 2, p.height / 2, 50);
-            for (let i = 0; i < system.flocks.length; i++) {
-                for (let g = 0; g <  system.flocks[i].graph.length; g++) {
+            if (system) {
+                for (let i = 0; i < system.flocks.length; i++) {
                     var color = system.flocks[i].color;
                     color = p.color(color[0], color[1], color[2]);
-                    var x = system.flocks[i].graph[g][0];
-                    var y = system.flocks[i].graph[g][1];
                     p.fill(color);
-                    p.ellipse(x, y, 50);
+                    for (let g = 0; g < system.flocks[i].graph.length; g++) {
+                        var x = system.flocks[i].graph[g].x;
+                        var y = system.flocks[i].graph[g].y;
+                        p.ellipse(x - p.width / 2, y - p.height / 2, 5);
+                    }
                 }
             }
         }
