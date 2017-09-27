@@ -18,7 +18,7 @@ function fetchJSON(name) {
             return JSONs[i].graph;
         }
     }
-    console.log("Did not a matching JSON name for " + name);
+    console.log("Did not find a matching JSON name for " + name);
     return null;
 }
 
