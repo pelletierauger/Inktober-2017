@@ -4,10 +4,9 @@ var showGeo = true;
 var showPanels = true;
 var showSketch = true;
 var modes = ["drawGraph", "detectGraph", "animate"];
-var mode = 0;
+var mode = 1;
 var points = [];
 var pointsDisplay;
-var JSONFileName;
 
 var sketch = new p5(function(p) {
     p.setup = function() {
@@ -24,12 +23,9 @@ var sketch = new p5(function(p) {
             p.noLoop();
         }
         if (mode == 0) {
-            folders.pointsDisplay = new Folder("Number of points", true);
+            folders.pointsDisplay = new Folder("Amount of points", true);
             pointsDisplay = p.createP(points.length);
             pointsDisplay.parent(folders.pointsDisplay.div);
-            JSONFileName = p.createP("Ceci est éditable.");
-            JSONFileName.parent(folders.pointsDisplay.div);
-            JSONFileName.style("contenteditable", "true");
             var saveButton = new Button("Save points to JSON", folders.pointsDisplay.div, function() {
                 if (points.length) {
                     socket.emit('savePoints', points);
