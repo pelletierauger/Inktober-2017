@@ -1,5 +1,15 @@
-var System = function() {
+var System = function(s) {
+    this.rate = s.rate;
+    this.name = s.name;
+    console.log(s.constructor.name);
     this.flocks = [];
+    if (s.background) {
+        this.background = sketch.loadImage("./images/" + this.name + "/background.jpg");
+        this.backgroundDisplayedOnce = false;
+    } else {
+        this.background = false;
+        this.backgroundDisplayedOnce = true;
+    }
 };
 
 System.prototype.addFlock = function(flock) {
@@ -10,6 +20,21 @@ System.prototype.update = function() {
     for (let i = 0; i < this.flocks.length; i++) {
         this.flocks[i].update();
     }
+};
+
+System.prototype.displayBackground = function() {
+    if (this.background) {
+        if (this.background.width > 1) {
+            sketch.image(this.background, 0, 0, sketch.width, sketch.height);
+            if (!this.backgroundDisplayedOnce) {
+                this.backgroundDisplayedOnce = true;
+            }
+        }
+    }
+};
+
+System.prototype.displayInkDots = function() {
+
 };
 
 System.prototype.displayGeo = function() {

@@ -64,7 +64,14 @@ var sketch = new p5(function(p) {
             displayArray();
         } else if (mode == 2) {
             if (system) {
-                system.update();
+                if (system.rate == 0) {
+                    if (!system.backgroundDisplayedOnce) {
+                        system.displayBackground();
+                    }
+                }
+                if (system.backgroundDisplayedOnce) {
+                    system.update();
+                }
             }
         }
     };
