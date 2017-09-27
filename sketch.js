@@ -176,9 +176,7 @@ var geo = new p5(function(p) {
     };
     p.draw = function() {
         if (mode == 0 && graphAngles) {
-            // console.log("Angle");
             p.clear();
-            // p.translate(p.width / 2, p.height / 2);
             let triangleSize = 20;
             p.push();
             p.translate(sketch.mouseX, sketch.mouseY);
