@@ -6,9 +6,9 @@ System.prototype.addFlock = function(flock) {
     this.flocks.push(new Flock(flock));
 };
 
-System.prototype.applyBehaviours = function() {
+System.prototype.update = function() {
     for (let i = 0; i < this.flocks.length; i++) {
-        this.flocks[i].behaviour(this);
+        this.flocks[i].update();
     }
 };
 
@@ -31,6 +31,7 @@ var Flock = function(f) {
     this.color = f.color;
     this.behaviour = f.behaviour;
     this.graph = f.graph;
+    this.type = f.type || "static";
     if (f.type == "vehicles" && f.vehicleVariables) {
         this.graph = this.makeVehicles(this.graph, f.vehicleVariables);
     } else if (f.type == "static" || !f.type) {
@@ -38,6 +39,16 @@ var Flock = function(f) {
     }
     this.attractors = [];
     this.repellers = [];
+};
+
+Flock.prototype.update = function() {
+    if (this.type == "vehicles") {
+        for (let i = 0; i < this.graph.length; i++) {
+            // console.log("how many times");
+            this.graph[i].applyBehaviors(this.repellers, this.attractors);
+            this.graph[i].update();
+        }
+    }
 };
 
 Flock.prototype.makeStatics = function(f) {
@@ -63,12 +74,18 @@ Flock.prototype.makeVehicles = function(f, v) {
     return g;
 };
 
-Flock.prototype.addAttractor = function(f, mult) {
-    this.attractors.push([f, mult]);
+Flock.prototype.addAttractors = function(f, mult) {
+    this.attractors.push({
+        f: f,
+        mult: mult
+    });
 };
 
-Flock.prototype.addRepeller = function(f, mult) {
-    this.repellers.push([f, mult]);
+Flock.prototype.addRepellers = function(f, mult) {
+    this.repellers.push({
+        f: f,
+        mult: mult
+    });
 };
 
 //--------------------Other functions-------------------------------------------------//

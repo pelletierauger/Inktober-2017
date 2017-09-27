@@ -1,11 +1,12 @@
 var vehicles = [];
 
-var Vehicle = function(x, y, mS, mF) {
+var Vehicle = function(x, y, mS, mF, d) {
     this.pos = new p5.Vector(x, y);
     this.vel = new p5.Vector(0, 0);
     this.acc = new p5.Vector(0, 0);
-    this.maxSpeed = 150;
-    this.maxForce = 10;
+    this.maxSpeed = mS || 150;
+    this.maxForce = mF || 10;
+    this.desiredSeparation = d || 50;
     vehicles.push(this);
 };
 
@@ -19,17 +20,15 @@ Vehicle.prototype.seek = function(target) {
 
     var steering = p5.Vector.sub(desired, this.vel);
     steering.limit(this.maxForce);
-    // this.applyForce(steering);
     return (steering);
 };
 
 Vehicle.prototype.separate = function(vehicles) {
-    var desiredSeparation = 50;
     var sum = new p5.Vector(0, 0);
     var count = 0;
     for (var i = 0; i < vehicles.length; i++) {
         var d = p5.Vector.dist(this.pos, vehicles[i].pos);
-        if (d > 0 && d < desiredSeparation) {
+        if (d > 0 && d < this.desiredSeparation) {
             var diff = p5.Vector.sub(this.pos, vehicles[i].pos);
             diff.normalize();
             diff.div(d);
@@ -44,21 +43,28 @@ Vehicle.prototype.separate = function(vehicles) {
 
         var steer = p5.Vector.sub(sum, this.vel);
         steer.limit(this.maxForce);
-        // this.applyForce(steer);
         return (steer);
     }
-    return (createVector(0, 0));
+    return (new p5.Vector(0, 0));
 };
 
-Vehicle.prototype.applyBehaviors = function(vehicles, target) {
-    var separateForce = this.separate(vehicles);
-    var seekForce = this.seek(target);
-
-    separateForce.mult(1);
-    seekForce.mult(0.4);
-
-    this.applyForce(separateForce);
-    this.applyForce(seekForce);
+Vehicle.prototype.applyBehaviors = function(repellers, attractors) {
+    if (repellers) {
+        for (let i = 0; i < repellers.length; i++) {
+            var separateForce = this.separate(repellers[i].f.graph);
+            var mult = repellers[i].mult;
+            separateForce.mult(mult);
+            this.applyForce(separateForce);
+        }
+    }
+    if (attractors) {
+        for (let i = 0; i < attractors.length; i++) {
+            var seekForce = this.seek(attractors[i].f);
+            var mult = attractors[i].mult;
+            seekForce.mult(mult);
+            this.applyForce(seekForce);
+        }
+    }
 };
 
 Vehicle.prototype.update = function(force) {
@@ -67,7 +73,6 @@ Vehicle.prototype.update = function(force) {
     this.pos.add(this.vel);
     this.acc.set(0, 0);
 };
-
 
 Vehicle.prototype.display = function(force) {
     this.acc.add(force);

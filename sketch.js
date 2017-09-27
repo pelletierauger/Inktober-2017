@@ -64,7 +64,7 @@ var sketch = new p5(function(p) {
             displayArray();
         } else if (mode == 2) {
             if (system) {
-                system.applyBehaviours();
+                system.update();
             }
         }
     };

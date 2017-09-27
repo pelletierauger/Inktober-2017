@@ -5,9 +5,9 @@ function loadSystems() {
     firstSystem.addFlock({
         type: "vehicles",
         vehicleVariables: {
-            maxSpeed: 10,
+            maxSpeed: 150,
             maxForce: 10,
-            desiredSeparation: 50
+            desiredSeparation: 150
         },
         color: [0, 255, 0],
         behaviour: function(that) {
@@ -23,6 +23,7 @@ function loadSystems() {
         behaviour: function() {},
         graph: fetchJSON("wed-sep-27-2017-014506")
     });
+    firstSystem.flocks[0].addRepellers(firstSystem.flocks[1], 0.05);
 
     return firstSystem;
 }
