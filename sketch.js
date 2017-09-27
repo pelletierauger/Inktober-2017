@@ -7,17 +7,25 @@ var modes = ["drawGraph", "detectGraph", "animate"];
 var mode = 1;
 var points = [];
 var pointsDisplay;
+var img;
 
 var sketch = new p5(function(p) {
+    p.preload = function() {
+        img = p.loadImage("./images/polkadot.jpg");
+    };
     p.setup = function() {
         socket = io.connect('http://localhost:8080');
+        if (mode == 0 || mode == 1) {
+            p.pixelDensity(1);
+        }
         p.canvas = p.createCanvas(p.windowWidth, p.windowWidth * 9 / 16);
         p.canvas.addClass('sketch');
         p.frameRate(30);
         p.background(0);
         p.fill(255, 0, 0);
         p.noStroke();
-        p.ellipse(p.width / 2, p.height / 2, 100);
+        p.imageMode(p.CENTER);
+        // p.ellipse(p.width / 2, p.height / 2, 100);
         createInterface();
         if (!looping) {
             p.noLoop();
@@ -32,7 +40,18 @@ var sketch = new p5(function(p) {
                 }
             });
         } else if (mode == 1) {
+            folders.pointsDisplay = new Folder("Amount of points", true);
+            pointsDisplay = p.createP(points.length);
+            pointsDisplay.parent(folders.pointsDisplay.div);
+            var saveButton = new Button("Save points to JSON", folders.pointsDisplay.div, function() {
+                if (points.length) {
+                    socket.emit('savePoints', points);
+                }
+            });
 
+            p.image(img, p.width / 2, p.height / 2, p.width, p.height);
+            p.loadPixels();
+            p.background(0, 150);
         } else if (mode == 2) {
 
         }
@@ -42,7 +61,9 @@ var sketch = new p5(function(p) {
         if (mode == 0) {
 
         } else if (mode == 1) {
-
+            // p.background(0);
+            dotDetection();
+            displayArray();
         } else if (mode == 2) {
 
         }
@@ -92,11 +113,11 @@ var sketch = new p5(function(p) {
             if (showGeo) {
                 showGeo = false;
                 geo.canvas.style("display", "none");
-                geo.noLoop();
+                // geo.noLoop();
             } else {
                 showGeo = true;
                 geo.canvas.style("display", "block");
-                geo.loop();
+                // geo.loop();
             }
         }
         if (p.key == 'f' || p.key == 'F') {
