@@ -15,7 +15,6 @@ Vehicle.prototype.applyForce = function(force) {
 };
 
 Vehicle.prototype.seek = function(target) {
-    // console.log(target);
     var desired = p5.Vector.sub(target, this.pos);
     desired.setMag(this.maxSpeed);
 
