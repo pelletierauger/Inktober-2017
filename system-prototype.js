@@ -58,6 +58,7 @@ var Flock = function(f, systemName) {
     if (f.dots) {
         this.dotsDisplayRate = f.dots.displayRate;
         this.dotsReadiness = false;
+        this.dotSize = f.dots.size;
         if (f.dots.name && f.dots.amount) {
             this.dots = [];
             for (let i = 0; i < f.dots.amount; i++) {
@@ -94,7 +95,7 @@ Flock.prototype.displayInkDots = function() {
                 sketch.push();
                 sketch.translate(this.graph[i].pos.x - sketch.width / 2, this.graph[i].pos.y - sketch.height / 2);
                 sketch.rotate(sketch.random(0, sketch.TWO_PI));
-                sketch.image(this.dots[dotChoice], 0, 0, 15, 15);
+                sketch.image(this.dots[dotChoice], 0, 0, this.dotSize, this.dotSize);
                 sketch.pop();
             }
         }

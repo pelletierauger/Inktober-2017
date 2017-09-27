@@ -12,7 +12,8 @@ function loadSystems() {
         dots: {
             name: "dot",
             amount: 4,
-            displayRate: 1
+            displayRate: 1,
+            size: 30
         },
         vehicleVariables: {
             maxSpeed: 150,
