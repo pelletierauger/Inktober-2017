@@ -2,6 +2,20 @@ var http = require('http');
 var path = require('path');
 var fs = require('fs');
 var filenameFormatter = require('./filename-formatter.js');
+var JSONs = [];
+
+var graphJSON = function(path, name) {
+    this.name = name;
+    console.log(path);
+    this.graph = fs.readFileSync(path).toString();
+    JSONs.push(this);
+};
+
+loadJSONs();
+console.log(JSONs);
+
+// console.log(fs.readFileSync('./JSONs/tue-sep-26-2017-231635.json').toString());
+// console.log(fs.readFileSync('./style.css').toString());
 
 function handleRequest(req, res) {
     // What did we request?
@@ -65,3 +79,24 @@ io.sockets.on('connection', function(socket) {
         });
     });
 });
+
+function loadJSONs() {
+    try {
+        var files = fs.readdirSync("./JSONs");
+    } catch (e) {
+        return;
+    }
+    if (files.length > 0)
+        for (var i = 0; i < files.length; i++) {
+            var filePath = "./JSONs/" + files[i];
+
+            var fileType = filePath.slice(filePath.length - 5, filePath.length);
+            if (fileType == ".json" ||  fileType == ".JSON") {
+                var fileName = "" + files[i];
+                fileName = fileName.slice(0, fileName.length - 5);
+                // console.log(fileName);
+                // console.log(filePath);
+                var graph = new graphJSON(filePath, fileName);
+            }
+        }
+}
