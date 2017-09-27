@@ -25,7 +25,7 @@ var sketch = new p5(function(p) {
                 looping = true;
             }
         }
-        if (p.key == 't' || p.key == 'T') {
+        if (p.key == 'g' || p.key == 'G') {
             if (showSketch) {
                 showSketch = false;
                 p.canvas.style("display", "none");
@@ -34,7 +34,7 @@ var sketch = new p5(function(p) {
                 p.canvas.style("display", "block");
             }
         }
-        if (p.key == 'g' || p.key == 'G') {
+        if (p.key == 't' || p.key == 'T') {
             if (showGeo) {
                 showGeo = false;
                 geo.canvas.style("display", "none");
