@@ -4,18 +4,16 @@ var fs = require('fs');
 var filenameFormatter = require('./filename-formatter.js');
 var JSONs = [];
 
+function jsonify(obj) { return JSON.stringify(obj, null, 2) }
+
 var graphJSON = function(path, name) {
     this.name = name;
     console.log(path);
-    this.graph = fs.readFileSync(path).toString();
+    this.graph = JSON.parse(fs.readFileSync(path));
     JSONs.push(this);
 };
 
 loadJSONs();
-console.log(JSONs);
-
-// console.log(fs.readFileSync('./JSONs/tue-sep-26-2017-231635.json').toString());
-// console.log(fs.readFileSync('./style.css').toString());
 
 function handleRequest(req, res) {
     // What did we request?
@@ -54,17 +52,27 @@ server.listen(8080);
 console.log('Server started on port 8080');
 
 var io = require('socket.io').listen(server);
+
+var clients = {};
+
 io.sockets.on('connection', function(socket) {
-    console.log("We have a new client: " + socket.id);
+    console.log("Client " + socket.id + " is connected.");
+
+    socket.on('pullJSONs', function() {
+        io.sockets.emit('pushJSONs', JSONs);
+    });
+
     socket.on('mouse', function(data) {
         // Data comes in as whatever was sent, including objects
         console.log("Received: 'mouse' " + data.x + " " + data.y);
         // Send it to all other clients
         socket.broadcast.emit('mouse', data);
     });
+
     socket.on('bounce', function(data) {
         console.log(data);
     });
+
     socket.on('savePoints', function(data) {
         console.log(data);
         data = JSON.stringify(data);

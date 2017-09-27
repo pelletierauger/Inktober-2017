@@ -4,7 +4,7 @@ var showGeo = true;
 var showPanels = true;
 var showSketch = true;
 var modes = ["drawGraph", "detectGraph", "animate"];
-var mode = 1;
+var mode = 2;
 var points = [];
 var pointsDisplay;
 var img;
@@ -53,7 +53,10 @@ var sketch = new p5(function(p) {
             p.loadPixels();
             p.background(0, 150);
         } else if (mode == 2) {
-
+            socket.on('pushJSONs', function(data) {
+                console.log(data);
+            });
+            socket.emit('pullJSONs', "");
         }
     };
     p.draw = function() {
