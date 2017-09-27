@@ -56,9 +56,9 @@ System.prototype.displayGeo = function() {
 var Flock = function(f, systemName) {
     this.color = f.color;
     if (f.dots) {
-        this.dotsDisplayRate = f.dots.displayRate;
+        this.dotsDisplayRate = f.dots.displayRate || 1;
         this.dotsReadiness = false;
-        this.dotSize = f.dots.size;
+        this.dotSize = f.dots.size || 20;
         if (f.dots.name && f.dots.amount) {
             this.dots = [];
             for (let i = 0; i < f.dots.amount; i++) {
