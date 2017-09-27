@@ -10,7 +10,7 @@ var pointsDisplay;
 var img;
 var JSONs;
 var system;
-var graphAngles = true;
+var graphAngles = false;
 var angle = 0;
 
 function fetchJSON(name) {
