@@ -27,7 +27,18 @@ function loadSystems() {
         color: [255, 0, 0],
         graph: fetchJSON("wed-sep-27-2017-014506")
     });
-    firstSystem.flocks[0].addAttractors(firstSystem.flocks[1], 0.0015);
+    firstSystem.addFlock({
+        type: "atom",
+        color: [0, 0, 255],
+        graphLength: 10,
+        equation: function(t, i) {
+            t = t + i;
+            var x = sketch.width / 2 + Math.cos(t / 10) * 150;
+            var y = sketch.height / 2 + Math.sin(t / 10) * 150;
+            return (new p5.Vector(x, y));
+        }
+    });
+    firstSystem.flocks[0].addAttractors(firstSystem.flocks[2], 0.015);
     firstSystem.flocks[0].addRepellers(firstSystem.flocks[0], 0.05);
 
     return firstSystem;

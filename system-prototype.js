@@ -75,12 +75,14 @@ var Flock = function(f, systemName) {
         this.dotsReadiness = true;
     }
 
-    this.graph = f.graph;
     this.type = f.type || "static";
-    if (f.type == "vehicles" && f.vehicleVariables) {
-        this.graph = this.makeVehicles(this.graph, f.vehicleVariables);
-    } else if (f.type == "static" || !f.type) {
-        this.graph = this.makeStatics(this.graph);
+    if (this.type == "atom" && f.equation) {
+        this.equation = f.equation;
+        this.graph = this.makeAtoms(f.graphLength, this.equation);
+    } else if (f.type == "vehicles" && f.vehicleVariables) {
+        this.graph = this.makeVehicles(f.graph, f.vehicleVariables);
+    } else if (f.type == "static") {
+        this.graph = this.makeStatics(f.graph);
     }
     this.attractors = [];
     this.repellers = [];
@@ -127,8 +129,20 @@ Flock.prototype.update = function() {
                 this.graph[i].applyBehaviors(this.repellers, this.attractors);
                 this.graph[i].update();
             }
+        } else if (this.type == "atom" && this.equation) {
+            for (let i = 0; i < this.graph.length; i++) {
+                this.graph[i].pos = this.equation(sketch.frameCount, i);
+            }
         }
     }
+};
+
+Flock.prototype.makeAtoms = function(l, eq) {
+    var g = [];
+    for (let i = 0; i < l; i++) {
+        g.push(new Static(eq(0, i)));
+    }
+    return g;
 };
 
 Flock.prototype.makeStatics = function(f) {
