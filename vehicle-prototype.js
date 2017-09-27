@@ -15,6 +15,7 @@ Vehicle.prototype.applyForce = function(force) {
 };
 
 Vehicle.prototype.seek = function(target) {
+    // console.log(target);
     var desired = p5.Vector.sub(target, this.pos);
     desired.setMag(this.maxSpeed);
 
@@ -59,10 +60,13 @@ Vehicle.prototype.applyBehaviors = function(repellers, attractors) {
     }
     if (attractors) {
         for (let i = 0; i < attractors.length; i++) {
-            var seekForce = this.seek(attractors[i].f);
-            var mult = attractors[i].mult;
-            seekForce.mult(mult);
-            this.applyForce(seekForce);
+            for (var j = 0; j < attractors[i].f.graph.length; j++) {
+                var seekForce = this.seek(attractors[i].f.graph[j].pos);
+                var mult = attractors[i].mult;
+                seekForce.mult(mult);
+                this.applyForce(seekForce);
+            }
+
         }
     }
 };
