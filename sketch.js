@@ -4,7 +4,7 @@ var showGeo = true;
 var showPanels = true;
 var showSketch = true;
 var modes = ["drawGraph", "detectGraph", "animate"];
-var mode = 0;
+var mode = 1;
 var points = [];
 var pointsDisplay;
 var img;
@@ -187,6 +187,10 @@ var geo = new p5(function(p) {
             p.vertex(0, -triangleSize / 2);
             p.endShape(p.CLOSE);
             p.pop();
+        }
+        if (mode == 1) {
+            p.clear();
+            p.translate(p.width / 2, p.height / 2);
         }
         if (mode == 2) {
             p.clear();
