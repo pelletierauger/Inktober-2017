@@ -10,7 +10,7 @@ var pointsDisplay;
 var img;
 var JSONs;
 var system;
-var graphAngles = false;
+var graphAngles = true;
 var angle = 0;
 
 var sketch = new p5(function(p) {

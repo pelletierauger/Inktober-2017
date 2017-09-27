@@ -84,6 +84,8 @@ var Flock = function(f, systemName) {
         this.graph = this.makeVehicles(f.graph, f.vehicleVariables);
     } else if (f.type == "static") {
         this.graph = this.makeStatics(f.graph);
+    } else if (f.type == "turtle" && f.turtleInstructions) {
+        this.graph = this.makeTurtles(f.graph, f.turtleInstructions);
     }
     this.attractors = [];
     this.repellers = [];
@@ -134,8 +136,29 @@ Flock.prototype.update = function() {
             for (let i = 0; i < this.graph.length; i++) {
                 this.graph[i].pos = this.equation(sketch.frameCount, i);
             }
+        } else if (this.type == "turtle") {
+            for (let i = 0; i < this.graph.length; i++) {
+                this.graph[i].walk();
+            }
         }
     }
+};
+
+Flock.prototype.makeTurtles = function(f, inst) {
+    var g = [];
+    for (let i = 0; i < f.length; i++) {
+        var heading = f[i].a || 0;
+        var turtle = new Turtle({
+            heading: heading,
+            pos: {
+                x: f[i].x,
+                y: f[i].y
+            },
+            instructions: inst
+        });
+        g.push(turtle);
+    }
+    return g;
 };
 
 Flock.prototype.makeAtoms = function(l, eq) {
