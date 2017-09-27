@@ -11,7 +11,7 @@ function loadSystems() {
         color: [0, 255, 0],
         dots: {
             name: "dot",
-            amount: 3,
+            amount: 4,
             displayRate: 1
         },
         vehicleVariables: {
