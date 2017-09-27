@@ -9,9 +9,11 @@ function loadSystems() {
     firstSystem.addFlock({
         type: "vehicles",
         color: [0, 255, 0],
-        nameOfDots: "dot",
-        amountOfDots: 3,
-        dotDisplayRate: 1,
+        dots: {
+            name: "dot",
+            amount: 3,
+            displayRate: 1
+        },
         vehicleVariables: {
             maxSpeed: 150,
             maxForce: 10,

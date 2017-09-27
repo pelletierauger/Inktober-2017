@@ -33,7 +33,9 @@ System.prototype.displayBackground = function() {
 };
 
 System.prototype.displayInkDots = function() {
-
+    for (let i = 0; i < this.flocks.length; i++) {
+        this.flocks[i].displayInkDots();
+    }
 };
 
 System.prototype.displayGeo = function() {
@@ -53,17 +55,23 @@ System.prototype.displayGeo = function() {
 
 var Flock = function(f, systemName) {
     this.color = f.color;
-    if (f.nameOfDots && f.amountOfDots) {
-        this.dots = [];
-        for (let i = 0; i < f.amountOfDots; i++) {
-            var formattedIndex = "" + i;
-            while (formattedIndex.length < 3) {
-                formattedIndex = "0" + formattedIndex;
+    if (f.dots) {
+        this.dotsDisplayRate = f.dots.displayRate;
+        this.dotsReadiness = false;
+        if (f.dots.name && f.dots.amount) {
+            this.dots = [];
+            for (let i = 0; i < f.dots.amount; i++) {
+                var formattedIndex = "" + i;
+                while (formattedIndex.length < 3) {
+                    formattedIndex = "0" + formattedIndex;
+                }
+                var path = "./images/" + systemName + "/" + f.dots.name + formattedIndex + ".png";
+                var dot = sketch.loadImage(path);
+                this.dots.push(dot);
             }
-            var path = "./images/" + systemName + "/" + f.nameOfDots + formattedIndex + ".png";
-            var dot = sketch.loadImage(path);
-            this.dots.push(dot);
         }
+    } else {
+        this.dotsReadiness = true;
     }
 
     this.graph = f.graph;
@@ -77,12 +85,47 @@ var Flock = function(f, systemName) {
     this.repellers = [];
 };
 
-Flock.prototype.update = function() {
-    if (this.type == "vehicles") {
+Flock.prototype.displayInkDots = function() {
+    // console.log("Towards mercy!");
+    if (this.dots && this.dotsReadiness) {
+        // console.log("Oh mercy!");
         for (let i = 0; i < this.graph.length; i++) {
-            // console.log("how many times");
-            this.graph[i].applyBehaviors(this.repellers, this.attractors);
-            this.graph[i].update();
+            sketch.push();
+            sketch.translate(this.graph[i].pos.x - sketch.width / 2, this.graph[i].pos.y - sketch.height / 2);
+            sketch.rotate(sketch.random(0, sketch.TWO_PI));
+            sketch.image(this.dots[0], 0, 0, 15, 15);
+            sketch.pop();
+        }
+    }
+};
+
+Flock.prototype.testDotsReadiness = function() {
+    if (this.dots) {
+        var ready = true;
+        for (let i = 0; i < this.dots.length; i++) {
+            if (this.dots[i].width <= 1) {
+                ready = false
+            }
+        }
+        if (!ready) {
+            this.dotsReadiness = false
+        } else {
+            this.dotsReadiness = true;
+        }
+        // console.log("yeehaw!");
+    }
+};
+
+Flock.prototype.update = function() {
+    if (!this.dotsReadiness) {
+        this.testDotsReadiness();
+    }
+    if (this.dotsReadiness) {
+        if (this.type == "vehicles") {
+            for (let i = 0; i < this.graph.length; i++) {
+                this.graph[i].applyBehaviors(this.repellers, this.attractors);
+                this.graph[i].update();
+            }
         }
     }
 };

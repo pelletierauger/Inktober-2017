@@ -68,6 +68,10 @@ var sketch = new p5(function(p) {
                     if (!system.backgroundDisplayedOnce) {
                         system.displayBackground();
                     }
+                    if (system.backgroundDisplayedOnce) {
+                        p.blendMode(p.MULTIPLY);
+                        system.displayInkDots();
+                    }
                 }
                 if (system.backgroundDisplayedOnce) {
                     system.update();
