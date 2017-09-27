@@ -3,8 +3,6 @@ function loadSystems() {
         this.flocks = [];
         this.applyBehaviours = function() {
             for (let i = 0; i < this.flocks.length; i++) {
-
-
                 this.flocks[i].behaviour(this);
             }
         };
