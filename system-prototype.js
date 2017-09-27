@@ -1,10 +1,9 @@
 var System = function(s) {
     this.rate = s.rate;
     this.name = s.name;
-    console.log(s.constructor.name);
     this.flocks = [];
     if (s.background) {
-        this.background = sketch.loadImage("./images/" + this.name + "/background.jpg");
+        this.background = sketch.loadImage("./images/" + this.name + "/background.png");
         this.backgroundDisplayedOnce = false;
     } else {
         this.background = false;
@@ -13,7 +12,7 @@ var System = function(s) {
 };
 
 System.prototype.addFlock = function(flock) {
-    this.flocks.push(new Flock(flock));
+    this.flocks.push(new Flock(flock, this.name));
 };
 
 System.prototype.update = function() {
@@ -52,9 +51,21 @@ System.prototype.displayGeo = function() {
 
 //--------------------Flocks-------------------------------------------------//
 
-var Flock = function(f) {
+var Flock = function(f, systemName) {
     this.color = f.color;
-    this.behaviour = f.behaviour;
+    if (f.nameOfDots && f.amountOfDots) {
+        this.dots = [];
+        for (let i = 0; i < f.amountOfDots; i++) {
+            var formattedIndex = "" + i;
+            while (formattedIndex.length < 3) {
+                formattedIndex = "0" + formattedIndex;
+            }
+            var path = "./images/" + systemName + "/" + f.nameOfDots + formattedIndex + ".png";
+            var dot = sketch.loadImage(path);
+            this.dots.push(dot);
+        }
+    }
+
     this.graph = f.graph;
     this.type = f.type || "static";
     if (f.type == "vehicles" && f.vehicleVariables) {

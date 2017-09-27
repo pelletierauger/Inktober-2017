@@ -3,13 +3,15 @@ function loadSystems() {
     var firstSystem = new System({
         rate: 0,
         name: "firstSystem",
-        background: true,
-        amountOfDots: 3
+        background: true
     });
 
     firstSystem.addFlock({
         type: "vehicles",
         color: [0, 255, 0],
+        nameOfDots: "dot",
+        amountOfDots: 3,
+        dotDisplayRate: 1,
         vehicleVariables: {
             maxSpeed: 150,
             maxForce: 10,
