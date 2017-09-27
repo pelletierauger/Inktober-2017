@@ -4,12 +4,14 @@ var showGeo = true;
 var showPanels = true;
 var showSketch = true;
 var modes = ["drawGraph", "detectGraph", "animate"];
-var mode = 2;
+var mode = 0;
 var points = [];
 var pointsDisplay;
 var img;
 var JSONs;
 var system;
+var graphAngles = true;
+var angle = 0;
 
 function fetchJSON(name) {
     for (let i = 0; i < JSONs.length; i++) {
@@ -147,6 +149,12 @@ var sketch = new p5(function(p) {
                 socket.emit('savePoints', points);
             }
         }
+        if (p.key == 'a' || p.key == 'A') {
+            angle -= 10;
+        }
+        if (p.key == 'd' || p.key == 'D') {
+            angle += 10;
+        }
     }
 });
 
@@ -162,10 +170,26 @@ var geo = new p5(function(p) {
             p.noLoop();
         }
         if (mode == 0 || mode == 1) {
-            p.noStroke();
+            p.stroke(255);
+            p.noFill();
         }
     };
     p.draw = function() {
+        if (mode == 0 && graphAngles) {
+            // console.log("Angle");
+            p.clear();
+            // p.translate(p.width / 2, p.height / 2);
+            let triangleSize = 20;
+            p.push();
+            p.translate(sketch.mouseX, sketch.mouseY);
+            p.rotate(angle / 360 * p.TWO_PI);
+            p.beginShape();
+            p.vertex(triangleSize, 0);
+            p.vertex(0, triangleSize / 2);
+            p.vertex(0, -triangleSize / 2);
+            p.endShape(p.CLOSE);
+            p.pop();
+        }
         if (mode == 2) {
             p.clear();
             p.translate(p.width / 2, p.height / 2);
