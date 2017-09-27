@@ -89,7 +89,6 @@ var Flock = function(f, systemName) {
 Flock.prototype.displayInkDots = function() {
     if (this.dots && this.dotsReadiness) {
         if (this.dotsDisplayRate == 1 || sketch.frameCount % this.dotsDisplayRate == 0) {
-            console.log(sketch.frameCount);
             for (let i = 0; i < this.graph.length; i++) {
                 var dotChoice = Math.floor(sketch.random(this.dots.length));
                 sketch.push();
