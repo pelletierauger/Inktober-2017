@@ -86,9 +86,7 @@ var Flock = function(f, systemName) {
 };
 
 Flock.prototype.displayInkDots = function() {
-    // console.log("Towards mercy!");
     if (this.dots && this.dotsReadiness) {
-        // console.log("Oh mercy!");
         for (let i = 0; i < this.graph.length; i++) {
             sketch.push();
             sketch.translate(this.graph[i].pos.x - sketch.width / 2, this.graph[i].pos.y - sketch.height / 2);
@@ -112,7 +110,6 @@ Flock.prototype.testDotsReadiness = function() {
         } else {
             this.dotsReadiness = true;
         }
-        // console.log("yeehaw!");
     }
 };
 
