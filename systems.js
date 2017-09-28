@@ -58,12 +58,12 @@ function loadSystems() {
             name: "dot",
             amount: 4,
             displayRate: 1,
-            size: 3
+            size: 6
         },
         vehicleVariables: {
             maxSpeed: 150,
             maxForce: 10,
-            desiredSeparation: 150,
+            desiredSeparation: 300,
             friction: 0.9
         },
         graph: fetchJSON("wed-sep-27-2017-014236")
@@ -104,6 +104,7 @@ function loadSystems() {
     });
 
     secondSystem.flocks[0].addAttractors(secondSystem.flocks[1], 0.015);
+    secondSystem.flocks[0].addRepellers(secondSystem.flocks[0], 0.05);
 
     return secondSystem;
 }
