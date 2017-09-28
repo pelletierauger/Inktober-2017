@@ -149,5 +149,5 @@ function loadSystems() {
         graph: fetchJSON("thu-sep-28-2017-005311")
     });
 
-    return thirdSystem;
+    return secondSystem;
 }
