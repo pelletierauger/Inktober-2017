@@ -97,10 +97,18 @@ var sketch = new p5(function(p) {
     p.mousePressed = function() {
         if (mode == 0) {
             if (p.mouseX <= p.width && p.mouseY <= p.height) {
-                var newV = {
-                    x: p.mouseX,
-                    y: p.mouseY
-                };
+                if (graphAngles) {
+                    var newV = {
+                        x: p.mouseX,
+                        y: p.mouseY,
+                        a: angle
+                    };
+                } else {
+                    var newV = {
+                        x: p.mouseX,
+                        y: p.mouseY
+                    };
+                }
                 p.ellipse(newV.x - p.width / 2, newV.y - p.height / 2, 2);
                 points.push(newV);
                 pointsDisplay.html(points.length);
@@ -110,10 +118,18 @@ var sketch = new p5(function(p) {
     p.mouseDragged = function() {
         if (mode == 0) {
             if (p.mouseX <= p.width && p.mouseY <= p.height) {
-                var newV = {
-                    x: p.mouseX,
-                    y: p.mouseY
-                };
+                if (graphAngles) {
+                    var newV = {
+                        x: p.mouseX,
+                        y: p.mouseY,
+                        a: angle
+                    };
+                } else {
+                    var newV = {
+                        x: p.mouseX,
+                        y: p.mouseY
+                    };
+                }
                 p.ellipse(newV.x - p.width / 2, newV.y - p.height / 2, 2);
                 points.push(newV);
                 pointsDisplay.html(points.length);

@@ -106,5 +106,48 @@ function loadSystems() {
     secondSystem.flocks[0].addAttractors(secondSystem.flocks[1], 0.015);
     secondSystem.flocks[0].addRepellers(secondSystem.flocks[0], 0.05);
 
-    return secondSystem;
+    //-----------------Second system--------------------------------------------------------//
+
+    var thirdSystem = new System({
+        rate: 0,
+        name: "firstSystem",
+        background: true,
+        onlyGeo: false
+    });
+
+    thirdSystem.addFlock({
+        type: "turtle",
+        color: [255, 255, 0],
+        dots: {
+            name: "dot",
+            amount: 4,
+            displayRate: 1,
+            size: 3
+        },
+        turtleInstructions: function() {
+            var s = 5;
+            var times = 4;
+            repeat(times, function() {
+                repeat(60, function() {
+                    forward(s);
+                    right(20);
+                    s += 0.1;
+                });
+                repeat(60, function() {
+                    forward(s);
+                    left(20);
+                    s -= 0.1;
+                });
+                forward(60);
+                repeat(4, function() {
+                    forward(s);
+                    left(360 / times / 4);
+                });
+                forward(60);
+            });
+        },
+        graph: fetchJSON("thu-sep-28-2017-005311")
+    });
+
+    return thirdSystem;
 }
