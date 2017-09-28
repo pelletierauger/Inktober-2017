@@ -51,6 +51,8 @@ var sketch = new p5(function(p) {
             socket.on('pushJSONs', function(data) {
                 JSONs = data;
                 system = loadSystems();
+                system.loadBackground();
+                system.loadFlockDots();
             });
             socket.emit('pullJSONs', "");
         }

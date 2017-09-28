@@ -3,12 +3,22 @@ var System = function(s) {
     this.name = s.name;
     this.onlyGeo = s.onlyGeo;
     this.flocks = [];
-    if (s.background && !this.onlyGeo) {
+    this.background = s.background;
+};
+
+System.prototype.loadBackground = function() {
+    if (this.background && !this.onlyGeo) {
         this.background = sketch.loadImage("./images/" + this.name + "/background.png");
         this.backgroundDisplayedOnce = false;
     } else {
         this.background = false;
         this.backgroundDisplayedOnce = true;
+    }
+};
+
+System.prototype.loadFlockDots = function() {
+    for (let i = 0; i < this.flocks.length; i++) {
+        this.flocks[i].loadDots();
     }
 };
 
@@ -55,27 +65,9 @@ System.prototype.displayGeo = function() {
 //--------------------Flocks-------------------------------------------------//
 
 var Flock = function(f, systemName) {
+    this.systemName = systemName;
     this.color = f.color;
-    if (f.dots) {
-        this.dotsDisplayRate = f.dots.displayRate || 1;
-        this.dotsReadiness = false;
-        this.dotSize = f.dots.size || 20;
-        if (f.dots.name && f.dots.amount) {
-            this.dots = [];
-            for (let i = 0; i < f.dots.amount; i++) {
-                var formattedIndex = "" + i;
-                while (formattedIndex.length < 3) {
-                    formattedIndex = "0" + formattedIndex;
-                }
-                var path = "./images/" + systemName + "/" + f.dots.name + formattedIndex + ".png";
-                var dot = sketch.loadImage(path);
-                this.dots.push(dot);
-            }
-        }
-    } else {
-        this.dotsReadiness = true;
-    }
-
+    this.rawDots = f.dots;
     this.type = f.type || "static";
     if (this.type == "atom" && f.equation) {
         this.equation = f.equation;
@@ -89,6 +81,28 @@ var Flock = function(f, systemName) {
     }
     this.attractors = [];
     this.repellers = [];
+};
+
+Flock.prototype.loadDots = function() {
+    if (this.rawDots) {
+        this.dotsDisplayRate = this.rawDots.displayRate || 1;
+        this.dotsReadiness = false;
+        this.dotSize = this.rawDots.size || 20;
+        if (this.rawDots.name && this.rawDots.amount) {
+            this.dots = [];
+            for (let i = 0; i < this.rawDots.amount; i++) {
+                var formattedIndex = "" + i;
+                while (formattedIndex.length < 3) {
+                    formattedIndex = "0" + formattedIndex;
+                }
+                var path = "./images/" + this.systemName + "/" + this.rawDots.name + formattedIndex + ".png";
+                var dot = sketch.loadImage(path);
+                this.dots.push(dot);
+            }
+        }
+    } else {
+        this.dotsReadiness = true;
+    }
 };
 
 Flock.prototype.displayInkDots = function() {
