@@ -187,7 +187,8 @@ Flock.prototype.makeVehicles = function(f, v) {
         var mS = v.maxSpeed;
         var mF = v.maxForce;
         var d = v.desiredSeparation;
-        g.push(new Vehicle(x, y, mS, mF, d));
+        var fri = v.friction || 1;
+        g.push(new Vehicle(x, y, mS, mF, d, fri));
     }
     return g;
 };

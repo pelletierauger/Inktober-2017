@@ -1,12 +1,13 @@
 var vehicles = [];
 
-var Vehicle = function(x, y, mS, mF, d) {
+var Vehicle = function(x, y, mS, mF, d, fri) {
     this.pos = new p5.Vector(x, y);
     this.vel = new p5.Vector(0, 0);
     this.acc = new p5.Vector(0, 0);
     this.maxSpeed = mS || 150;
     this.maxForce = mF || 10;
     this.desiredSeparation = d || 50;
+    this.friction = fri || 1;
     vehicles.push(this);
 };
 
@@ -74,6 +75,7 @@ Vehicle.prototype.update = function(force) {
     this.vel.add(this.acc);
     this.vel.limit(this.maxSpeed);
     this.pos.add(this.vel);
+    this.vel.mult(this.friction);
     this.acc.set(0, 0);
 };
 

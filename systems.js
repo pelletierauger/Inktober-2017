@@ -63,7 +63,8 @@ function loadSystems() {
         vehicleVariables: {
             maxSpeed: 150,
             maxForce: 10,
-            desiredSeparation: 150
+            desiredSeparation: 150,
+            friction: 0.9
         },
         graph: fetchJSON("wed-sep-27-2017-014236")
     });
