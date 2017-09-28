@@ -157,16 +157,23 @@ var sketch = new p5(function(p) {
                 interface.style("display", "block");
             }
         }
-        if (p.key == 'p' || p.key == 'P') {
-            if (points.length) {
-                socket.emit('savePoints', points);
-            }
-        }
+        // if (p.key == 'p' || p.key == 'P') {
+        //     if (points.length) {
+        //         socket.emit('savePoints', points);
+        //     }
+        // }
         if (p.key == 'a' || p.key == 'A') {
             angle -= 10;
         }
         if (p.key == 'd' || p.key == 'D') {
             angle += 10;
+        }
+        if (p.key == 'l' || p.key == 'L') {
+            if (mode == 2 && system && system.backgroundDisplayedOnce) {
+                p.blendMode(p.NORMAL);
+                system.displayBackground();
+                p.blendMode(p.MULTIPLY);
+            }
         }
     }
 });
