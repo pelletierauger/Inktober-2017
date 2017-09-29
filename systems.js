@@ -149,5 +149,45 @@ function loadSystems() {
         graph: fetchJSON("thu-sep-28-2017-005311")
     });
 
-    return secondSystem;
+    //-----------------First ink system--------------------------------------------------------//
+
+    var firstInk = new System({
+        rate: 0,
+        name: "first-ink",
+        background: true,
+        onlyGeo: false
+    });
+    firstInk.addFlock({
+        type: "vehicles",
+        color: [0, 255, 0],
+        dots: {
+            name: "dot",
+            amount: 4,
+            displayRate: 1,
+            size: 6
+        },
+        vehicleVariables: {
+            maxSpeed: 5,
+            maxForce: 10,
+            desiredSeparation: 10,
+            friction: 0.9
+        },
+        graph: fetchJSON("fri-sep-29-2017-011755")
+    });
+    firstInk.addFlock({
+        type: "static",
+        color: [255, 0, 0],
+        graph: fetchJSON("fri-sep-29-2017-011938")
+    });
+    firstInk.addFlock({
+        type: "static",
+        color: [255, 255, 0],
+        graph: [{ x: 650, y: 360 }]
+    });
+    firstInk.flocks[0].addAttractors(firstInk.flocks[2], 0.05);
+    firstInk.flocks[0].addRepellers(firstInk.flocks[0], 0.25);
+    firstInk.flocks[0].addRepellers(firstInk.flocks[1], 0.5);
+
+
+    return firstInk;
 }
