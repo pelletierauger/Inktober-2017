@@ -188,6 +188,55 @@ function loadSystems() {
     firstInk.flocks[0].addRepellers(firstInk.flocks[0], 0.25);
     firstInk.flocks[0].addRepellers(firstInk.flocks[1], 0.5);
 
+    //-----
+    var firstInk2 = new System({
+        rate: 0,
+        name: "first-ink",
+        background: true,
+        onlyGeo: false
+    });
+    firstInk2.addFlock({
+        type: "vehicles",
+        color: [0, 255, 0],
+        dots: {
+            name: "dot",
+            amount: 4,
+            displayRate: 1,
+            size: 6
+        },
+        vehicleVariables: {
+            maxSpeed: 5,
+            maxForce: 10,
+            desiredSeparation: 10,
+            friction: 0.9
+        },
+        graph: fetchJSON("fri-sep-29-2017-011755")
+    });
+    firstInk2.addFlock({
+        type: "static",
+        color: [255, 0, 0],
+        graph: fetchJSON("fri-sep-29-2017-011938")
+    });
+    firstInk2.addFlock({
+        type: "static",
+        color: [255, 255, 0],
+        graph: [{ x: 650, y: 360 }]
+    });
+    firstInk2.addFlock({
+        type: "atom",
+        color: [0, 0, 255],
+        graphLength: 1,
+        equation: function(t, i) {
+            var r = 400;
+            t = t + i;
+            var x = sketch.width / 2 + Math.cos(t / 10) * r;
+            var y = sketch.height / 2 + Math.sin(t / 10) * r;
+            return (new p5.Vector(x, y));
+        }
+    });
+    firstInk2.flocks[0].addAttractors(firstInk2.flocks[3], 0.05);
+    firstInk2.flocks[0].addRepellers(firstInk2.flocks[0], 0.5, 30);
+    firstInk2.flocks[0].addRepellers(firstInk2.flocks[1], 0.5, 10);
 
-    return firstInk;
+    return firstInk2;
 }
