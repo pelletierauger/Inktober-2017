@@ -24,12 +24,13 @@ Vehicle.prototype.seek = function(target) {
     return (steering);
 };
 
-Vehicle.prototype.separate = function(vehicles) {
+Vehicle.prototype.separate = function(vehicles, desiredSeparation) {
+    desiredSeparation = desiredSeparation || this.desiredSeparation;
     var sum = new p5.Vector(0, 0);
     var count = 0;
     for (var i = 0; i < vehicles.length; i++) {
         var d = p5.Vector.dist(this.pos, vehicles[i].pos);
-        if (d > 0 && d < this.desiredSeparation) {
+        if (d > 0 && d < desiredSeparation) {
             var diff = p5.Vector.sub(this.pos, vehicles[i].pos);
             diff.normalize();
             diff.div(d);
@@ -52,7 +53,7 @@ Vehicle.prototype.separate = function(vehicles) {
 Vehicle.prototype.applyBehaviors = function(repellers, attractors) {
     if (repellers) {
         for (let i = 0; i < repellers.length; i++) {
-            var separateForce = this.separate(repellers[i].f.graph);
+            var separateForce = this.separate(repellers[i].f.graph, repellers[i].desiredSeparation);
             var mult = repellers[i].mult;
             separateForce.mult(mult);
             this.applyForce(separateForce);

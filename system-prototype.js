@@ -214,10 +214,11 @@ Flock.prototype.addAttractors = function(f, mult) {
     });
 };
 
-Flock.prototype.addRepellers = function(f, mult) {
+Flock.prototype.addRepellers = function(f, mult, desiredSeparation) {
     this.repellers.push({
         f: f,
-        mult: mult
+        mult: mult,
+        desiredSeparation: desiredSeparation || null
     });
 };
 
