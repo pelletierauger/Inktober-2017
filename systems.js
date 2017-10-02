@@ -238,5 +238,154 @@ function loadSystems() {
     firstInk2.flocks[0].addRepellers(firstInk2.flocks[0], 0.5, 30);
     firstInk2.flocks[0].addRepellers(firstInk2.flocks[1], 0.5, 10);
 
-    return firstInk;
+
+    //-------------Day-Two-----------------------------------------------------------//
+
+
+    var dayTwo = new System({
+        rate: 0,
+        name: "day-two",
+        background: true,
+        onlyGeo: false
+    });
+    dayTwo.addFlock({
+        name: "center",
+        type: "vehicles",
+        dots: {
+            name: "dot",
+            amount: 4,
+            displayRate: 1,
+            size: 6
+        },
+        vehicleVariables: {
+            maxSpeed: 50,
+            maxForce: 50,
+            desiredSeparation: 10,
+            friction: 0.999
+        },
+        color: [255, 255, 0],
+        graph: fetchJSON("mon-oct-02-2017-034048")
+    });
+    dayTwo.addFlock({
+        name: "lines-sides",
+        type: "vehicles",
+        dots: {
+            name: "dot",
+            amount: 4,
+            displayRate: 1,
+            size: 6
+        },
+        vehicleVariables: {
+            maxSpeed: 2,
+            maxForce: 10,
+            desiredSeparation: 10,
+            friction: 0.9
+        },
+        color: [0, 255, 0],
+        graph: fetchJSON("mon-oct-02-2017-034109")
+    });
+    dayTwo.addFlock({
+        name: "ink-repellers",
+        type: "static",
+        color: [255, 0, 0],
+        graph: fetchJSON("mon-oct-02-2017-034016")
+    });
+    dayTwo.addFlock({
+        name: "line-center",
+        type: "static",
+        color: [0, 255, 255],
+        graph: fetchJSON("mon-oct-02-2017-034141")
+    });
+    dayTwo.flocks[1].addAttractors(dayTwo.flocks[0], 0.005);
+    dayTwo.flocks[1].addRepellers(dayTwo.flocks[1], 1, 20);
+    dayTwo.flocks[1].addRepellers(dayTwo.flocks[2], 1, 5);
+    dayTwo.flocks[0].addRepellers(dayTwo.flocks[1], 1, 40);
+    dayTwo.flocks[0].addRepellers(dayTwo.flocks[0], 1, 40);
+    dayTwo.flocks[0].addRepellers(dayTwo.flocks[3], 1, 40);
+    dayTwo.flocks[0].addRepellers(dayTwo.flocks[2], 1, 40);
+
+    //-------------Day-Two-B----------------------------------------------------------//
+
+
+    var dayTwoB = new System({
+        rate: 0,
+        name: "day-two",
+        background: true,
+        onlyGeo: false
+    });
+    dayTwoB.addFlock({
+        name: "center",
+        type: "vehicles",
+        dots: {
+            name: "dot",
+            amount: 4,
+            displayRate: 1,
+            size: 6
+        },
+        vehicleVariables: {
+            maxSpeed: 50,
+            maxForce: 50,
+            desiredSeparation: 10,
+            friction: 0.999
+        },
+        color: [255, 255, 0],
+        graph: fetchJSON("mon-oct-02-2017-034048")
+    });
+    dayTwoB.addFlock({
+        name: "lines-sides",
+        type: "vehicles",
+        vehicleVariables: {
+            maxSpeed: 2,
+            maxForce: 10,
+            desiredSeparation: 10,
+            friction: 0.9
+        },
+        color: [0, 255, 0],
+        graph: fetchJSON("mon-oct-02-2017-034109")
+    });
+    dayTwoB.addFlock({
+        name: "ink-repellers",
+        type: "static",
+        color: [255, 0, 0],
+        graph: fetchJSON("mon-oct-02-2017-034016")
+    });
+    dayTwoB.addFlock({
+        name: "line-center",
+        type: "static",
+        color: [0, 255, 255],
+        graph: fetchJSON("mon-oct-02-2017-034141")
+    });
+    dayTwoB.addFlock({
+        name: "center",
+        type: "vehicles",
+        dots: {
+            name: "dot",
+            amount: 4,
+            displayRate: 1,
+            size: 6
+        },
+        vehicleVariables: {
+            maxSpeed: 50,
+            maxForce: 50,
+            desiredSeparation: 10,
+            friction: 0.999
+        },
+        color: [255, 255, 0],
+        graph: fetchJSON("mon-oct-02-2017-043020")
+    });
+    // dayTwoB.flocks[1].addAttractors(dayTwoB.flocks[0], 0.005);
+    // dayTwoB.flocks[1].addRepellers(dayTwoB.flocks[1], 1, 20);
+    // dayTwoB.flocks[1].addRepellers(dayTwoB.flocks[2], 1, 5);
+    // dayTwoB.flocks[0].addRepellers(dayTwoB.flocks[1], 1, 40);
+    dayTwoB.flocks[0].addRepellers(dayTwoB.flocks[0], 1, 40);
+    dayTwoB.flocks[0].addRepellers(dayTwoB.flocks[3], 1, 40);
+    dayTwoB.flocks[0].addRepellers(dayTwoB.flocks[2], 1, 40);
+    dayTwoB.flocks[0].addRepellers(dayTwoB.flocks[4], 1, 40);
+
+    dayTwoB.flocks[4].addRepellers(dayTwoB.flocks[4], 1, 40);
+    dayTwoB.flocks[4].addRepellers(dayTwoB.flocks[3], 1, 40);
+    dayTwoB.flocks[4].addRepellers(dayTwoB.flocks[2], 1, 40);
+    dayTwoB.flocks[4].addRepellers(dayTwoB.flocks[0], 1, 40);
+
+    return dayTwoB;
 }
