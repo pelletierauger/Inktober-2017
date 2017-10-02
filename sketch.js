@@ -1,5 +1,6 @@
 var socket;
 var looping = true;
+var exporting = false;
 var showGeo = true;
 var showPanels = true;
 var showSketch = true;
@@ -74,6 +75,7 @@ var sketch = new p5(function(p) {
                         if (system.backgroundDisplayedOnce) {
                             p.blendMode(p.MULTIPLY);
                             system.displayInkDots();
+                            frameExport();
                         }
                     }
                     if (system.rate == 1) {
@@ -85,6 +87,7 @@ var sketch = new p5(function(p) {
                             p.blendMode(p.MULTIPLY);
                             system.displayInkDots();
                             p.blendMode(p.NORMAL);
+                            frameExport();
                         }
                     }
                 }
@@ -240,3 +243,14 @@ var geo = new p5(function(p) {
         }
     };
 });
+
+function frameExport() {
+    if (exporting) {
+        var formattedFrameCount = "" + sketch.frameCount;
+        var fileName = "inktober-2017-day-01b";
+        while (formattedFrameCount.length < 5) {
+            formattedFrameCount = "0" + formattedFrameCount;
+        }
+        sketch.save(fileName + "-" + formattedFrameCount + ".png");
+    }
+}
