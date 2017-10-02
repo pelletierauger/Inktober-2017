@@ -172,12 +172,12 @@ function loadSystems() {
             desiredSeparation: 10,
             friction: 0.9
         },
-        graph: fetchJSON("fri-sep-29-2017-011755")
+        graph: fetchJSON("sun-oct-01-2017-033641")
     });
     firstInk.addFlock({
         type: "static",
         color: [255, 0, 0],
-        graph: fetchJSON("fri-sep-29-2017-011938")
+        graph: fetchJSON("sun-oct-01-2017-033909")
     });
     firstInk.addFlock({
         type: "static",
@@ -185,8 +185,8 @@ function loadSystems() {
         graph: [{ x: 650, y: 360 }]
     });
     firstInk.flocks[0].addAttractors(firstInk.flocks[2], 0.05);
-    firstInk.flocks[0].addRepellers(firstInk.flocks[0], 0.25);
-    firstInk.flocks[0].addRepellers(firstInk.flocks[1], 0.5);
+    firstInk.flocks[0].addRepellers(firstInk.flocks[0], 0.5, 20);
+    firstInk.flocks[0].addRepellers(firstInk.flocks[1], 0.75, 20);
 
     //-----
     var firstInk2 = new System({
@@ -238,5 +238,5 @@ function loadSystems() {
     firstInk2.flocks[0].addRepellers(firstInk2.flocks[0], 0.5, 30);
     firstInk2.flocks[0].addRepellers(firstInk2.flocks[1], 0.5, 10);
 
-    return firstInk2;
+    return firstInk;
 }
