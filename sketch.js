@@ -76,6 +76,10 @@ var sketch = new p5(function(p) {
                             p.blendMode(p.MULTIPLY);
                             system.displayInkDots();
                             frameExport();
+                            if (exporting && p.frameCount % 100 == 0) {
+                                p.blendMode(p.NORMAL);
+                                p.background(255);
+                            }
                         }
                     }
                     if (system.rate == 1) {
@@ -88,6 +92,9 @@ var sketch = new p5(function(p) {
                             system.displayInkDots();
                             p.blendMode(p.NORMAL);
                             frameExport();
+                            if (exporting && p.frameCount % 100 == 0) {
+                                p.background(255);
+                            }
                         }
                     }
                 }
