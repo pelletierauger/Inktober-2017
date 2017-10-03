@@ -506,5 +506,254 @@ function loadSystems() {
 
     //-------------Day-Three-B----------------------------------------------------------//
 
-    return dayThree;
+    var dayThreeB = new System({
+        rate: 0,
+        name: "day-03",
+        background: true,
+        onlyGeo: false
+    });
+    dayThreeB.addFlock({
+        name: "gray-and-black",
+        type: "static",
+        color: [255, 0, 0],
+        graph: fetchJSON("tue-oct-03-2017-004212")
+    });
+    dayThreeB.addFlock({
+        name: "center",
+        type: "static",
+        // dots: {
+        //     name: "dot",
+        //     amount: 4,
+        //     displayRate: 1,
+        //     size: 10
+        // },
+        // vehicleVariables: {
+        //     maxSpeed: 50,
+        //     maxForce: 50,
+        //     desiredSeparation: 10,
+        //     friction: 0.9
+        // },
+        color: [0, 255, 255],
+        graph: fetchJSON("tue-oct-03-2017-000358")
+    });
+    dayThreeB.addFlock({
+        name: "eggs",
+        type: "static",
+        // dots: {
+        //     name: "dot",
+        //     amount: 4,
+        //     displayRate: 1,
+        //     size: 6
+        // },
+        // vehicleVariables: {
+        //     maxSpeed: 5,
+        //     maxForce: 5,
+        //     desiredSeparation: 10,
+        //     friction: 0.999
+        // },
+        color: [255, 255, 0],
+        graph: fetchJSON("tue-oct-03-2017-000438")
+    });
+    var n = 100;
+    var dayThreeBsidesArr = [];
+    var increment = Math.PI * 2 / n;
+    for (let i = 0; i <= Math.PI * 2 - increment; i += increment) {
+        var x = Math.cos(i) * 700 + sketch.width / 2;
+        var y = Math.sin(i) * 700 + sketch.height / 2;
+        dayThreeBsidesArr.push({
+            x: x,
+            y: y
+        });
+    }
+    dayThreeB.addFlock({
+        name: "sides",
+        type: "vehicles",
+        dots: {
+            name: "dot",
+            amount: 4,
+            displayRate: 1,
+            size: 8
+        },
+        vehicleVariables: {
+            maxSpeed: 25,
+            maxForce: 5,
+            desiredSeparation: 10,
+            friction: 0.9
+        },
+        color: [150, 0, 0],
+        graph: dayThreeBsidesArr
+    });
+    dayThreeB.addFlock({
+        type: "atom",
+        color: [0, 0, 255],
+        graphLength: 1,
+        equation: function(t, i) {
+            t = t + i;
+            var x = sketch.width / 2 + Math.cos(t / 300) * 150;
+            var y = sketch.height / 2 + Math.sin(t / 300) * 150;
+            return (new p5.Vector(x, y));
+        }
+    });
+    // dayThreeB.addFlock({
+    //     name: "sides",
+    //     type: "vehicles",
+    //     dots: {
+    //         name: "dot",
+    //         amount: 4,
+    //         displayRate: 1,
+    //         size: 8
+    //     },
+    //     vehicleVariables: {
+    //         maxSpeed: 5,
+    //         maxForce: 5,
+    //         desiredSeparation: 10,
+    //         friction: 0.9
+    //     },
+    //     color: [150, 0, 0],
+    //     graph: fetchJSON("tue-oct-03-2017-000518")
+    // });
+
+    // dayThreeB.flocks[1].addRepellers(dayThreeB.flocks[0], 0.5, 10);
+    // dayThreeB.flocks[2].addRepellers(dayThreeB.flocks[2], 1, 10);
+    // dayThreeB.flocks[2].addRepellers(dayThreeB.flocks[0], 0.5, 10);
+    // dayThreeB.flocks[0].addRepellers(dayThreeB.flocks[0], 1, 40);
+    dayThreeB.flocks[3].addAttractors(dayThreeB.flocks[4], 0.005);
+    dayThreeB.flocks[3].addRepellers(dayThreeB.flocks[3], 0.75, 10);
+    dayThreeB.flocks[3].addRepellers(dayThreeB.flocks[0], 0.75, 10);
+
+
+    //-------Day-Three-C--------------------------------------------------------------//
+
+    var dayThreeC = new System({
+        rate: 0,
+        name: "day-03",
+        background: true,
+        onlyGeo: false
+    });
+    dayThreeC.addFlock({
+        name: "gray-and-black",
+        type: "vehicles",
+        dots: {
+            name: "dot",
+            amount: 4,
+            displayRate: 1,
+            size: 6
+        },
+        vehicleVariables: {
+            maxSpeed: 5,
+            maxForce: 5,
+            desiredSeparation: 10,
+            friction: 0.9
+        },
+        color: [255, 0, 0],
+        graph: fetchJSON("tue-oct-03-2017-004212")
+    });
+    dayThreeC.addFlock({
+        name: "center",
+        type: "static",
+        // dots: {
+        //     name: "dot",
+        //     amount: 4,
+        //     displayRate: 1,
+        //     size: 10
+        // },
+        // vehicleVariables: {
+        //     maxSpeed: 50,
+        //     maxForce: 50,
+        //     desiredSeparation: 10,
+        //     friction: 0.9
+        // },
+        color: [0, 255, 255],
+        graph: fetchJSON("tue-oct-03-2017-000358")
+    });
+    dayThreeC.addFlock({
+        name: "eggs",
+        type: "vehicles",
+        // dots: {
+        //     name: "dot",
+        //     amount: 4,
+        //     displayRate: 1,
+        //     size: 8
+        // },
+        vehicleVariables: {
+            maxSpeed: 0.2,
+            maxForce: 2.5,
+            desiredSeparation: 10,
+            friction: 0.999
+        },
+        color: [255, 255, 0],
+        graph: fetchJSON("tue-oct-03-2017-000438")
+    });
+    var n = 100;
+    var dayThreeCsidesArr = [];
+    var increment = Math.PI * 2 / n;
+    for (let i = 0; i <= Math.PI * 2 - increment; i += increment) {
+        var x = Math.cos(i) * 750 + sketch.width / 2;
+        var y = Math.sin(i) * 750 + sketch.height / 2;
+        dayThreeCsidesArr.push({
+            x: x,
+            y: y
+        });
+    }
+    dayThreeC.addFlock({
+        name: "sides",
+        type: "vehicles",
+        dots: {
+            name: "dot",
+            amount: 4,
+            displayRate: 1,
+            size: 18
+        },
+        vehicleVariables: {
+            maxSpeed: 25,
+            maxForce: 5,
+            desiredSeparation: 10,
+            friction: 0.9
+        },
+        color: [150, 0, 0],
+        graph: dayThreeCsidesArr
+    });
+    dayThreeC.addFlock({
+        type: "atom",
+        color: [0, 0, 255],
+        graphLength: 1,
+        equation: function(t, i) {
+            t = t + i;
+            var x = sketch.width / 2 + Math.cos(t / 30) * 200;
+            var y = sketch.height / 2 + Math.sin(t / 30) * 200;
+            return (new p5.Vector(x, y));
+        }
+    });
+    // dayThreeC.addFlock({
+    //     name: "sides",
+    //     type: "vehicles",
+    //     dots: {
+    //         name: "dot",
+    //         amount: 4,
+    //         displayRate: 1,
+    //         size: 8
+    //     },
+    //     vehicleVariables: {
+    //         maxSpeed: 5,
+    //         maxForce: 5,
+    //         desiredSeparation: 10,
+    //         friction: 0.9
+    //     },
+    //     color: [150, 0, 0],
+    //     graph: fetchJSON("tue-oct-03-2017-000518")
+    // });
+
+    // dayThreeC.flocks[1].addRepellers(dayThreeC.flocks[0], 0.5, 10);
+    // dayThreeC.flocks[2].addRepellers(dayThreeC.flocks[2], 1, 10);
+    // dayThreeC.flocks[2].addRepellers(dayThreeC.flocks[0], 0.5, 10);
+    dayThreeC.flocks[0].addRepellers(dayThreeC.flocks[0], 1, 40);
+    // dayThreeC.flocks[3].addAttractors(dayThreeC.flocks[4], 0.005);
+    dayThreeC.flocks[3].addAttractors(dayThreeC.flocks[4], 0.075);
+    dayThreeC.flocks[3].addRepellers(dayThreeC.flocks[0], 1, 80);
+    dayThreeC.flocks[3].addRepellers(dayThreeC.flocks[3], 0.75, 10);
+
+    // dayThreeC.flocks[3].addRepellers(dayThreeC.flocks[2], 0.75, 10);
+    // dayThreeC.flocks[2].addRepellers(dayThreeC.flocks[2], 0.75, 10);
+
+    return dayThreeC;
 }
