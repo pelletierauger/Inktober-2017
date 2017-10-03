@@ -387,5 +387,124 @@ function loadSystems() {
     dayTwoB.flocks[4].addRepellers(dayTwoB.flocks[2], 1, 40);
     dayTwoB.flocks[4].addRepellers(dayTwoB.flocks[0], 1, 40);
 
-    return dayTwoB;
+    //-------------Day-Three----------------------------------------------------------//
+
+    var dayThree = new System({
+        rate: 0,
+        name: "day-03",
+        background: true,
+        onlyGeo: false
+    });
+    dayThree.addFlock({
+        name: "gray-and-black",
+        type: "static",
+        color: [255, 0, 0],
+        graph: fetchJSON("tue-oct-03-2017-004212")
+    });
+    dayThree.addFlock({
+        name: "center",
+        type: "static",
+        // dots: {
+        //     name: "dot",
+        //     amount: 4,
+        //     displayRate: 1,
+        //     size: 10
+        // },
+        // vehicleVariables: {
+        //     maxSpeed: 50,
+        //     maxForce: 50,
+        //     desiredSeparation: 10,
+        //     friction: 0.9
+        // },
+        color: [0, 255, 255],
+        graph: fetchJSON("tue-oct-03-2017-000358")
+    });
+    dayThree.addFlock({
+        name: "eggs",
+        type: "static",
+        // dots: {
+        //     name: "dot",
+        //     amount: 4,
+        //     displayRate: 1,
+        //     size: 6
+        // },
+        // vehicleVariables: {
+        //     maxSpeed: 5,
+        //     maxForce: 5,
+        //     desiredSeparation: 10,
+        //     friction: 0.999
+        // },
+        color: [255, 255, 0],
+        graph: fetchJSON("tue-oct-03-2017-000438")
+    });
+    var n = 100;
+    var sidesArr = [];
+    var increment = Math.PI * 2 / n;
+    for (let i = 0; i <= Math.PI * 2 - increment; i += increment) {
+        var x = Math.cos(i) * 700 + sketch.width / 2;
+        var y = Math.sin(i) * 700 + sketch.height / 2;
+        sidesArr.push({
+            x: x,
+            y: y
+        });
+    }
+    dayThree.addFlock({
+        name: "sides",
+        type: "vehicles",
+        dots: {
+            name: "dot",
+            amount: 4,
+            displayRate: 1,
+            size: 8
+        },
+        vehicleVariables: {
+            maxSpeed: 25,
+            maxForce: 5,
+            desiredSeparation: 10,
+            friction: 0.9
+        },
+        color: [150, 0, 0],
+        graph: sidesArr
+    });
+    dayThree.addFlock({
+        type: "atom",
+        color: [0, 0, 255],
+        graphLength: 1,
+        equation: function(t, i) {
+            t = t + i;
+            var x = sketch.width / 2 + Math.cos(t / 100) * 150;
+            var y = sketch.height / 2 + Math.sin(t / 100) * 150;
+            return (new p5.Vector(x, y));
+        }
+    });
+    // dayThree.addFlock({
+    //     name: "sides",
+    //     type: "vehicles",
+    //     dots: {
+    //         name: "dot",
+    //         amount: 4,
+    //         displayRate: 1,
+    //         size: 8
+    //     },
+    //     vehicleVariables: {
+    //         maxSpeed: 5,
+    //         maxForce: 5,
+    //         desiredSeparation: 10,
+    //         friction: 0.9
+    //     },
+    //     color: [150, 0, 0],
+    //     graph: fetchJSON("tue-oct-03-2017-000518")
+    // });
+
+    // dayThree.flocks[1].addRepellers(dayThree.flocks[0], 0.5, 10);
+    // dayThree.flocks[2].addRepellers(dayThree.flocks[2], 1, 10);
+    // dayThree.flocks[2].addRepellers(dayThree.flocks[0], 0.5, 10);
+    // dayThree.flocks[0].addRepellers(dayThree.flocks[0], 1, 40);
+    dayThree.flocks[3].addAttractors(dayThree.flocks[4], 0.005);
+    dayThree.flocks[3].addRepellers(dayThree.flocks[3], 1, 10);
+    dayThree.flocks[3].addRepellers(dayThree.flocks[0], 1, 10);
+
+    //-------------Day-Three-B----------------------------------------------------------//
+
+    return dayThree;
 }
