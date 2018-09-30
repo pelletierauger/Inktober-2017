@@ -755,5 +755,115 @@ function loadSystems() {
     // dayThreeC.flocks[3].addRepellers(dayThreeC.flocks[2], 0.75, 10);
     // dayThreeC.flocks[2].addRepellers(dayThreeC.flocks[2], 0.75, 10);
 
-    return dayThreeC;
+
+    //-------Day-Four--------------------------------------------------------------//
+
+    var dayFour = new System({
+        rate: 0,
+        name: "day-04",
+        background: true,
+        onlyGeo: false
+    });
+
+    dayFour.addFlock({
+        name: "center",
+        type: "static",
+        color: [255, 0, 0],
+        graph: fetchJSON("wed-oct-04-2017-000933")
+    });
+    dayFour.addFlock({
+        name: "sides",
+        type: "vehicles",
+        dots: {
+            name: "dot",
+            amount: 4,
+            displayRate: 1,
+            size: 6
+        },
+        vehicleVariables: {
+            maxSpeed: 25,
+            maxForce: 5,
+            desiredSeparation: 10,
+            friction: 0.99
+        },
+        color: [0, 255, 0],
+        graph: fetchJSON("wed-oct-04-2017-001021")
+    });
+    dayFour.addFlock({
+        type: "atom",
+        color: [0, 0, 255],
+        graphLength: 1,
+        equation: function(t, i) {
+            t = t + i;
+            var x = sketch.width / 2 + Math.cos(t / 300) * 200;
+            var y = sketch.height / 2 + Math.sin(t / 300) * 200;
+            return (new p5.Vector(x, y));
+        }
+    });
+
+    dayFour.flocks[1].addAttractors(dayFour.flocks[2], 0.0075);
+
+    dayFour.flocks[1].addRepellers(dayFour.flocks[1], 0.25, 10);
+    dayFour.flocks[1].addRepellers(dayFour.flocks[0], 0.75, 10);
+
+    //------Day-Four-B-------------------------//
+
+    var dayFourB = new System({
+        rate: 0,
+        name: "day-04",
+        background: true,
+        onlyGeo: false
+    });
+
+    dayFourB.addFlock({
+        name: "center",
+        type: "static",
+        color: [255, 0, 0],
+        graph: fetchJSON("wed-oct-04-2017-004738")
+    });
+    var n = 100;
+    var dayFourBArray = [];
+    var increment = Math.PI * 2 / n;
+    for (let i = 0; i <= Math.PI * 2 - increment; i += increment) {
+        var x = Math.cos(i) * 750 + sketch.width / 2;
+        var y = Math.sin(i) * 750 + sketch.height / 2;
+        dayFourBArray.push({
+            x: x,
+            y: y
+        });
+    }
+    dayFourB.addFlock({
+        name: "sides",
+        type: "vehicles",
+        dots: {
+            name: "dot",
+            amount: 4,
+            displayRate: 1,
+            size: 18
+        },
+        vehicleVariables: {
+            maxSpeed: 25,
+            maxForce: 5,
+            desiredSeparation: 10,
+            friction: 0.9
+        },
+        color: [150, 0, 0],
+        graph: dayFourBArray
+    });
+    dayFourB.addFlock({
+        type: "atom",
+        color: [0, 0, 255],
+        graphLength: 1,
+        equation: function(t, i) {
+            t = t + i;
+            var x = sketch.width / 2 + Math.cos(t / 300) * 200;
+            var y = sketch.height / 2 + Math.sin(t / 300) * 200;
+            return (new p5.Vector(x, y));
+        }
+    });
+    dayFourB.flocks[1].addAttractors(dayFourB.flocks[2], 0.075);
+    dayFourB.flocks[1].addRepellers(dayFourB.flocks[0], 0.25, 10);
+
+
+    return dayFourB;
 }
