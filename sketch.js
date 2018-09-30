@@ -16,7 +16,7 @@ var angle = 0;
 
 var sketch = new p5(function(p) {
     p.preload = function() {
-        img = p.loadImage("./images/polkadot.jpg");
+        img = p.loadImage("./images/day-04b/background.png");
     };
     p.setup = function() {
         socket = io.connect('http://localhost:8080');
@@ -76,10 +76,10 @@ var sketch = new p5(function(p) {
                             p.blendMode(p.MULTIPLY);
                             system.displayInkDots();
                             frameExport();
-                            if (exporting && p.frameCount % 100 == 0) {
-                                p.blendMode(p.NORMAL);
-                                p.background(255);
-                            }
+                            // if (exporting && p.frameCount % 100 == 0) {
+                            //     p.blendMode(p.NORMAL);
+                            //     p.background(255);
+                            // }
                         }
                     }
                     if (system.rate == 1) {
@@ -92,9 +92,9 @@ var sketch = new p5(function(p) {
                             system.displayInkDots();
                             p.blendMode(p.NORMAL);
                             frameExport();
-                            if (exporting && p.frameCount % 100 == 0) {
-                                p.background(255);
-                            }
+                            // if (exporting && p.frameCount % 100 == 0) {
+                            //     p.background(255);
+                            // }
                         }
                     }
                 }
@@ -254,7 +254,7 @@ var geo = new p5(function(p) {
 function frameExport() {
     if (exporting) {
         var formattedFrameCount = "" + sketch.frameCount;
-        var fileName = "inktober-2017-day-01b";
+        var fileName = "inktober-2017-day-03";
         while (formattedFrameCount.length < 5) {
             formattedFrameCount = "0" + formattedFrameCount;
         }

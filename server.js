@@ -100,7 +100,7 @@ function loadJSONs() {
             var filePath = "./JSONs/" + files[i];
 
             var fileType = filePath.slice(filePath.length - 5, filePath.length);
-            if (fileType == ".json" ||  fileType == ".JSON") {
+            if (fileType == ".json" || fileType == ".JSON") {
                 var fileName = "" + files[i];
                 fileName = fileName.slice(0, fileName.length - 5);
                 // console.log(fileName);

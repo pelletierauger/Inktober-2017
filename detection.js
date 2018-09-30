@@ -8,7 +8,7 @@ function dotDetection() {
                 for (var j = 0; j < points.length; j++) {
                     var v = sketch.createVector(x, y);
                     var v2 = sketch.createVector(points[j].x, points[j].y);
-                    if (sketch.dist(v.x, v.y, v2.x, v2.y) < 9) {
+                    if (sketch.dist(v.x, v.y, v2.x, v2.y) < 4) {
                         tooClose = true;
                     }
                 }
@@ -27,7 +27,7 @@ function displayArray() {
         for (var j = 0; j < points.length; j++) {
             if (points[j]) {
                 geo.fill(255);
-                geo.ellipse(points[j].x - geo.width / 2, points[j].y - geo.height / 2, 5);
+                geo.ellipse(points[j].x - geo.width / 2, points[j].y - geo.height / 2, 2);
             }
         }
     }
